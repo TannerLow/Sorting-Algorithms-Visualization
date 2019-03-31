@@ -36,6 +36,7 @@ public class Display extends JPanel {
 			g.drawRect((int) (i * width), getHeight() - (int) (height * Main.array[i]),
 					   (int) width      , (int) (height * Main.array[i])             );
 		}
+		//IGNORE FOR NOW WILL CLEAN LATER
 //		g.setColor(color);
 //		g.fillRect(0, 0, getWidth(), getHeight());
 //		//g.setColor(color);
