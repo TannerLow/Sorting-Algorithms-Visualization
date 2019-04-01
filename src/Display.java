@@ -1,13 +1,18 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Display extends JPanel {
+public class Display extends JPanel implements KeyListener{
 	JFrame frame;
+	public static String currentSort = ""; 
+	public static boolean done = true;
 	
 	public Display(int width, int height, String title) {
 		createDisplay(width, height, title);
@@ -20,47 +25,44 @@ public class Display extends JPanel {
 		frame.setResizable(true);
 		frame.setVisible(true);
 		frame.add(this);
+		frame.addKeyListener(this);
 		frame.pack();
 	}
 	
 	public void paintComponent(Graphics g) {
+		//Clear screen
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
+		//Display array
 		double width = (double) getWidth() / Main.array.length;
 		double height = (double) (getHeight() - 20) / Main.array.length;
 		for(int i = 0; i < Main.array.length; i++) {
-			g.setColor(Color.WHITE);
+			if(i == Main.swapIndeces[0] || i == Main.swapIndeces[1]) 
+				g.setColor(Color.RED);
+			else
+				g.setColor(Color.WHITE);
 			g.fillRect((int) (i * width), getHeight() - (int) (height * Main.array[i]),
 					   (int) width      , (int) (height * Main.array[i])             );
 			g.setColor(Color.BLACK);
 			g.drawRect((int) (i * width), getHeight() - (int) (height * Main.array[i]),
 					   (int) width      , (int) (height * Main.array[i])             );
 		}
-		//IGNORE FOR NOW WILL CLEAN LATER
-//		g.setColor(color);
-//		g.fillRect(0, 0, getWidth(), getHeight());
-//		//g.setColor(color);
-//		g.fillOval(200, 100, 600, 600);
-//		g.fillOval(800, 100, 600, 600);
-//		g.setFont(new Font("Arial", Font.PLAIN, 12));
-//		g.setColor(Color.BLACK);
-//		//g.drawString("Sample Text", 350, 400);
-//		int y = 400;
-//		for(String s : sampleText) {
-//			g.drawString(s, 350, y);
-//			y += 12;
-//		}
-//		g.setColor(Color.WHITE);
-//		y = 400;
-//		for(String s : sampleText) {
-//			g.drawString(s, 950, y);
-//			y += 12;
-//		}
-//		//g.drawString("Sample Text", 950, 400);
-//		g.setFont(new Font("Arial", Font.PLAIN, 48));
-//		g.drawString("Count: " + count, 10, 50);
+		//Display information
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Arial", Font.PLAIN, 20));
+		g.drawString(currentSort + " (Comparisons: " + Main.comparisons + ", Swaps: " + Main.swaps + ")", 10, 22);
+		g.drawString("Time per swap: " + Main.swapTime + "ms", 10, 44);
+		if(done)
+			g.drawString("Press a key to Continue", 600, 22);
 	}
 	public void render() {
 		repaint();
 	}
+	//unused
+	public void keyPressed(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent e) {
+		Main.waitVar++;
+	}
+	//unused
+	public void keyTyped(KeyEvent arg0) {}
 }
