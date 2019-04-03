@@ -13,28 +13,28 @@ public class Main {
 		display.render();
 		while(true) {
 			waitToContinue();
-
+			//Perform bubble sort
 			Display.currentSort = "Bubble Sort";
 			Thread.sleep(1000);
 			randomize();
 			bubbleSort();
 			display.render();
 			waitToContinue();
-
+			//Perform shell sort
 			Display.currentSort = "Shell Sort";
 			Thread.sleep(1000);
 			randomize();
 			shellSort();
 			display.render();
 			waitToContinue();
-
+			//Perform merge sort
 			Display.currentSort = "Merge Sort";
 			Thread.sleep(1000);
 			randomize();
 			mergeSort();
 			display.render();
 			waitToContinue();
-
+			//Perform quick sort
 			Display.currentSort = "Quick Sort";
 			Thread.sleep(1000);
 			randomize();
@@ -42,11 +42,13 @@ public class Main {
 			display.render();
 		}
 	}
+	//Fills array with values 1-SIZE
 	private static void populate() {
 		array = new int[SIZE];
 		for(int i = 0; i < SIZE; i++)
 			array[i] = i + 1;
 	}
+	//Shuffles array
 	private static void randomize() {
 		Random random = new Random();
 		for(int i = 0; i < SIZE; i++) {
@@ -56,6 +58,7 @@ public class Main {
 			array[newIndex] = temp;
 		}
 	}
+	//Swap the values of 2 indices in the array
 	private static void swap(int a, int b) {
 		int temp = array[a];
 		array[a] = array[b];
@@ -103,6 +106,7 @@ public class Main {
 		}
 		swapIndeces[0] = -1; swapIndeces[1] = -1;
 	}
+	//Bottom up merge sort
 	private static void mergeSort() throws InterruptedException {
 		swapTime = 5 * SORTING_RATE; 
 		for(int size = 1; size < SIZE; size *= 2) 
@@ -111,6 +115,7 @@ public class Main {
 
 		swapIndeces[0] = -1; swapIndeces[1] = -1;
 	}
+	//mergeSort helper function for joining 2 sub arrays
 	private static void merge(int start, int mid, int end) throws InterruptedException {
 		int[] copy = new int[SIZE];
 		for(int i = start; i <= end; i++) 
@@ -142,11 +147,13 @@ public class Main {
 			swaps++;
 		}
 	}
+	//Non recursive call to the recursive quickSort
 	private static void quickSort() throws InterruptedException {
 		swapTime = 5 * SORTING_RATE;
 		quickSort(0, SIZE-1);
 		swapIndeces[0] = -1; swapIndeces[1] = -1;
 	}
+	//Recursive quick sort
 	private static void quickSort(int start, int end) throws InterruptedException {
 		if(start < end) {
 			int pivot = partition(start, end);
@@ -154,6 +161,7 @@ public class Main {
 	        quickSort(pivot+1, end);
 		}
 	}
+	//quickSort helper function for placing the pivot and sorting the array surrounding the pivot
 	private static int partition(int start, int end) throws InterruptedException {
 		int pivot = array[end];
 		int i = start - 1;
@@ -174,6 +182,7 @@ public class Main {
 		swapIndeces[0] = i; swapIndeces[1] = end;
 		return i;
 	}
+	//Press to continue function, gets called between algorithms
 	private static void waitToContinue() throws InterruptedException {
 		Display.done = true;
 		waitVar = 0;

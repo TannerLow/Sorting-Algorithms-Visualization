@@ -17,7 +17,7 @@ public class Display extends JPanel implements KeyListener{
 	public Display(int width, int height, String title) {
 		createDisplay(width, height, title);
 	}
-	
+	//Sets up a simple JFrame with a JPanel for drawing to
 	private void createDisplay(int width, int height, String title) {
 		frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +28,7 @@ public class Display extends JPanel implements KeyListener{
 		frame.addKeyListener(this);
 		frame.pack();
 	}
-	
+	//JPanel's drawing component
 	public void paintComponent(Graphics g) {
 		//Clear screen
 		g.setColor(Color.BLACK);
@@ -55,12 +55,14 @@ public class Display extends JPanel implements KeyListener{
 		if(done)
 			g.drawString("Press a key to Continue", 600, 22);
 	}
+	//Refreshes paintComponent to account for changing variables
 	public void render() {
 		repaint();
 	}
 	//unused
 	public void keyPressed(KeyEvent arg0) {}
 	public void keyReleased(KeyEvent e) {
+		//Lets the main function know the user has pressed a key and the program should continue
 		Main.waitVar++;
 	}
 	//unused
