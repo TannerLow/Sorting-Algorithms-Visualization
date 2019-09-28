@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 public class Sorter {
 	private String nameOfSort = "";
@@ -131,6 +133,16 @@ public class Sorter {
 			swapTime = 1;
 			selectionSort();
 			break;
+		case Radix:
+			nameOfSort = "Radix Sort";
+			swapTime = 5;
+			radixSort();
+			break;
+		case Insertion:
+			nameOfSort = "Insertion Sort";
+			swapTime = 1;
+			insertionSort();
+			break;
 		}
 		swapIndeces[0] = -1; swapIndeces[1] = -1;
 	}
@@ -210,6 +222,57 @@ public class Sorter {
 				}
 			}
 			swap(i,min);
+		}
+	}
+	public void radixSort() {
+		ArrayList<Integer> zero  = new ArrayList<Integer>(),
+				   		   one   = new ArrayList<Integer>(),
+				   		   two   = new ArrayList<Integer>(),
+				   		   three = new ArrayList<Integer>(),
+				   		   four  = new ArrayList<Integer>(),
+				   		   five  = new ArrayList<Integer>(),
+				   		   six   = new ArrayList<Integer>(),
+				   		   seven = new ArrayList<Integer>(),
+				   		   eight = new ArrayList<Integer>(),
+				   		   nine  = new ArrayList<Integer>();
+		TreeMap<Integer,ArrayList<Integer>> map = new TreeMap<Integer,ArrayList<Integer>>();
+		map.put(0, zero);
+		map.put(1,  one);
+		map.put(2,  two);
+		map.put(3,three);
+		map.put(4, four);
+		map.put(5, five);
+		map.put(6,  six);
+		map.put(7,seven);
+		map.put(8,eight);
+		map.put(9, nine);
+
+		int denominator = 1, digit;
+		while(denominator < size) {
+			for(int j = 0; j < size; j++) {
+				digit = (array[j] / denominator) % 10;
+				map.get(digit).add(array[j]);
+			}
+			int i = 0;
+			for(int j = 0; j < size; j++) {
+				if(map.get(i).isEmpty())
+					i++;
+				array[j] = map.get(i).remove(0);
+				updateGraph(j,j);
+			}
+			denominator *= 10;
+		}
+	}
+	public void insertionSort() {
+		for(int i = 1; i < size; i++) {
+			for(int j = i; j > 0; j--) {
+				updateGraph(j-1,j);
+				if(compare(array[j-1],array[j]))
+					break;
+				else {
+					swap(j-1,j);
+				}
+			}
 		}
 	}
 }

@@ -8,8 +8,8 @@ public class Main {
 		display = new Display(1600, 800, "Sorting Algorithms Visualization", sorter);
 		sorter.setDisplay(display);
 		display.render();
-		Sort[] slowerSorts = {Sort.Bubble, Sort.Selection};
-		Sort[] fasterSorts = {Sort.Shell, Sort.Merge};
+		Sort[] slowerSorts = {Sort.Insertion, Sort.Bubble, Sort.Selection};
+		Sort[] fasterSorts = {Sort.Radix, Sort.Shell, Sort.Merge};
 		
 		while(true) {
 			for(Sort sort : slowerSorts) 
