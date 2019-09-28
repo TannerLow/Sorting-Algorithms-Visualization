@@ -3,6 +3,6 @@ A visualization of various sorting algorithms built in Java.
 
 Current Algorithms
 * Bubble Sort
+* Selection Sort
 * Shell Sort
 * Merge Sort
-* Quick Sort
