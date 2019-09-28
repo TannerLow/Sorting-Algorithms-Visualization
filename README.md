@@ -1,4 +1,4 @@
-# Sorting-Algorithms-Visualization v1.0
+# Sorting-Algorithms-Visualization v2.0
 A visualization of various sorting algorithms built in Java.  
 
 Current Algorithms
