@@ -10,15 +10,15 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Display extends JPanel implements KeyListener{
-	JFrame frame;
-	public static String currentSort = ""; 
+	JFrame frame; 
 	public static boolean done = true;
+	Sorter sorter;
 	
-	public Display(int width, int height, String title) {
-		createDisplay(width, height, title);
+	public Display(int width, int height, String title,Sorter sorter) {
+		createDisplay(width, height, title, sorter);
 	}
 	//Sets up a simple JFrame with a JPanel for drawing to
-	private void createDisplay(int width, int height, String title) {
+	private void createDisplay(int width, int height, String title, Sorter sorter) {
 		frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(width, height));
@@ -27,6 +27,7 @@ public class Display extends JPanel implements KeyListener{
 		frame.add(this);
 		frame.addKeyListener(this);
 		frame.pack();
+		this.sorter = sorter;
 	}
 	//JPanel's drawing component
 	public void paintComponent(Graphics g) {
@@ -34,24 +35,24 @@ public class Display extends JPanel implements KeyListener{
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		//Display array
-		double width = (double) getWidth() / Main.array.length;
-		double height = (double) (getHeight() - 20) / Main.array.length;
-		for(int i = 0; i < Main.array.length; i++) {
-			if(i == Main.swapIndeces[0] || i == Main.swapIndeces[1]) 
+		double width = (double) getWidth() / sorter.getSize();
+		double height = (double) (getHeight() - 20) / sorter.getSize();
+		for(int i = 0; i < sorter.getSize(); i++) {
+			if(i == sorter.getSwapIndex(0) || i == sorter.getSwapIndex(1)) 
 				g.setColor(Color.RED);
 			else
 				g.setColor(Color.WHITE);
-			g.fillRect((int) (i * width), getHeight() - (int) (height * Main.array[i]),
-					   (int) width      , (int) (height * Main.array[i])             );
+			g.fillRect((int) (i * width), getHeight() - (int) (height * sorter.at(i)),
+					   (int) width      , (int) (height * sorter.at(i))             );
 			g.setColor(Color.BLACK);
-			g.drawRect((int) (i * width), getHeight() - (int) (height * Main.array[i]),
-					   (int) width      , (int) (height * Main.array[i])             );
+			g.drawRect((int) (i * width), getHeight() - (int) (height * sorter.at(i)),
+					   (int) width      , (int) (height * sorter.at(i))             );
 		}
 		//Display information
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 20));
-		g.drawString(currentSort + " (Comparisons: " + Main.comparisons + ", Swaps: " + Main.swaps + ")", 10, 22);
-		g.drawString("Time per swap: " + Main.swapTime + "ms", 10, 44);
+		g.drawString(sorter.getName() + " (Comparisons: " + sorter.getComparisons() + ", Swaps: " + sorter.getSwaps() + ")", 10, 22);
+		g.drawString("Time per swap: " + sorter.getSwapTime() + "ms", 10, 44);
 		if(done)
 			g.drawString("Press a key to Continue", 600, 22);
 	}
@@ -61,10 +62,9 @@ public class Display extends JPanel implements KeyListener{
 	}
 	//unused
 	public void keyPressed(KeyEvent arg0) {}
+	public void keyTyped(KeyEvent arg0) {}
 	public void keyReleased(KeyEvent e) {
 		//Lets the main function know the user has pressed a key and the program should continue
-		Main.waitVar++;
+		Main.waitVar = true;
 	}
-	//unused
-	public void keyTyped(KeyEvent arg0) {}
 }
