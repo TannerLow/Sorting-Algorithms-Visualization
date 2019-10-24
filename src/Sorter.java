@@ -53,8 +53,6 @@ public class Sorter {
 		return comparisons;
 	}
 	public void swap(int a, int b) {
-		swaps++;
-		if(a == b) return;
 		int temp = array[a];
 		array[a] = array[b];
 		array[b] = temp;
@@ -63,6 +61,10 @@ public class Sorter {
 	public boolean compare(int a, int b) {
 		comparisons++;
 		return a < b; 
+	}
+	public boolean compareEq(int a, int b) {
+		comparisons++;
+		return a <= b; 
 	}
 	public void populate() {
 		for(int i = 0; i < array.length; i++)
@@ -210,7 +212,38 @@ public class Sorter {
 		}
 	}
 	public void quickSort() {
-		
+		quickSort(0,size-1);
+	}
+	private void quickSort(int left, int right) {
+		if(left < right) {
+			int pos = partition(left,right);
+			quickSort(left,pos-1);
+			quickSort(pos+1,right);
+		}
+	}
+	private int partition(int left, int right) {
+		int pivot = medianOf3(left,right);
+		swap(right,pivot);
+		int pointer = left;
+		while(left != right) {
+			if(compare(array[left],array[right])) {
+				if(left != pointer)
+					swap(left, pointer);
+				updateGraph(left,pointer);
+				pointer++;
+			}
+			left++;
+		}
+		updateGraph(pointer,right);
+		swap(pointer,right);
+		return pointer;
+	}
+	private int medianOf3(int left, int right) {
+		int mid = (left+right)/2;
+		if(array[right] < array[left]) swap(right,left);
+		if(array[mid]   < array[left]) swap(mid,left);
+		if(array[right] < array[mid])  swap(right,mid);
+		return mid;
 	}
 	public void selectionSort() {
 		for(int i = 0; i < size; i++) {
@@ -225,16 +258,17 @@ public class Sorter {
 		}
 	}
 	public void radixSort() {
-		ArrayList<Integer> zero  = new ArrayList<Integer>(),
-				   		   one   = new ArrayList<Integer>(),
-				   		   two   = new ArrayList<Integer>(),
-				   		   three = new ArrayList<Integer>(),
-				   		   four  = new ArrayList<Integer>(),
-				   		   five  = new ArrayList<Integer>(),
-				   		   six   = new ArrayList<Integer>(),
-				   		   seven = new ArrayList<Integer>(),
-				   		   eight = new ArrayList<Integer>(),
-				   		   nine  = new ArrayList<Integer>();
+		ArrayList<Integer> 
+		zero  = new ArrayList<Integer>(),
+		one   = new ArrayList<Integer>(),
+		two   = new ArrayList<Integer>(),
+		three = new ArrayList<Integer>(),
+		four  = new ArrayList<Integer>(),
+		five  = new ArrayList<Integer>(),
+		six   = new ArrayList<Integer>(),
+		seven = new ArrayList<Integer>(),
+		eight = new ArrayList<Integer>(),
+		nine  = new ArrayList<Integer>();
 		TreeMap<Integer,ArrayList<Integer>> map = new TreeMap<Integer,ArrayList<Integer>>();
 		map.put(0, zero);
 		map.put(1,  one);
