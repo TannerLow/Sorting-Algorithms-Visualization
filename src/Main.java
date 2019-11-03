@@ -9,7 +9,7 @@ public class Main {
 		sorter.setDisplay(display);
 		display.render();
 		Sort[] slowerSorts = {Sort.Insertion, Sort.Bubble, Sort.Selection};
-		Sort[] fasterSorts = {Sort.Quick,Sort.Radix, Sort.Shell, Sort.Merge, Sort.Quick};
+		Sort[] fasterSorts = {Sort.Radix, Sort.Shell, Sort.Merge, Sort.Quick, Sort.Heap};
 		
 		while(true) {
 			for(Sort sort : slowerSorts) 

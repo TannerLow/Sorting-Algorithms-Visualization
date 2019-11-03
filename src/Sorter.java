@@ -127,7 +127,7 @@ public class Sorter {
 			break;
 		case Quick:
 			nameOfSort = "Quick Sort";
-			swapTime = 5;
+			swapTime = 3;
 			quickSort();
 			break;
 		case Selection:
@@ -145,6 +145,10 @@ public class Sorter {
 			swapTime = 1;
 			insertionSort();
 			break;
+		case Heap:
+			nameOfSort = "Heap Sort";
+			swapTime = 5;
+			heapSort();
 		}
 		swapIndeces[0] = -1; swapIndeces[1] = -1;
 	}
@@ -222,29 +226,29 @@ public class Sorter {
 		}
 	}
 	private int partition(int left, int right) {
-		int pivot = medianOf3(left,right);
-		swap(right,pivot);
-		int pointer = left;
-		while(left != right) {
-			if(compare(array[left],array[right])) {
-				if(left != pointer)
-					swap(left, pointer);
-				updateGraph(left,pointer);
-				pointer++;
+		int pivot = right--;
+		while(true) {
+			updateGraph(left,pivot);
+			while(compare(array[left], array[pivot])) {
+				updateGraph(left,right);
+				left++;
 			}
-			left++;
+			while(compare(array[pivot], array[right]) && right  > 0) {
+				updateGraph(right,right);
+				right--;
+			}
+			if(left < right) {
+				updateGraph(left,right);
+				swap(left,right);
+			}
+			else {
+				updateGraph(left,pivot);
+				swap(left,pivot);
+				return left;
+			}
 		}
-		updateGraph(pointer,right);
-		swap(pointer,right);
-		return pointer;
 	}
-	private int medianOf3(int left, int right) {
-		int mid = (left+right)/2;
-		if(array[right] < array[left]) swap(right,left);
-		if(array[mid]   < array[left]) swap(mid,left);
-		if(array[right] < array[mid])  swap(right,mid);
-		return mid;
-	}
+	
 	public void selectionSort() {
 		for(int i = 0; i < size; i++) {
 			int min = size-1;
@@ -306,6 +310,37 @@ public class Sorter {
 				else {
 					swap(j-1,j);
 				}
+			}
+		}
+	}
+	
+	public void heapSort() {
+		buildHeap();
+		for(int i = size-1; i > 0; i--) {
+			updateGraph(i,i);
+			swap(0,i);
+			maxHeapify(0,i);
+		}
+	}
+	public void buildHeap() {
+		for(int i = size-1; i >= 0; i--) {
+			maxHeapify(i,size);
+		}
+	}
+	public void maxHeapify(int index, int length) {
+		int left = 2*index + 1, right = 2*index + 2;
+		if(right < length) {
+			int max = (compare(array[right],array[left])) ? left : right;
+			if(compare(array[index],array[max])) {	
+				updateGraph(index,max);
+				swap(index,max);
+				maxHeapify(max,length);
+			}
+		}
+		else if(left < length) {
+			if(compare(array[index],array[left])) {
+				updateGraph(index,left);
+				swap(index,left);
 			}
 		}
 	}
