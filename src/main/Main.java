@@ -24,13 +24,15 @@ public class Main {
 		};
 		
 		while(true) {
-//			graph.setNewSize(100);
-//			for(ISortingAlgorithm algorithm : slowAlgorithms) {
-//				graph.setAlgorithmInfo(algorithm.getName(), algorithm.getDelay());
-//				graph.randomize();
-//				algorithm.sort(graph);
-//				display.pause();
-//			}
+			//Slower Algorithms
+			graph.setNewSize(100);
+			for(ISortingAlgorithm algorithm : slowAlgorithms) {
+				graph.setAlgorithmInfo(algorithm.getName(), algorithm.getDelay());
+				graph.randomize();
+				algorithm.sort(graph);
+				display.pause();
+			}
+			//Faster Algorithms
 			graph.setNewSize(400);
 			for(ISortingAlgorithm algorithm : fastAlgorithms) {
 				graph.setAlgorithmInfo(algorithm.getName(), algorithm.getDelay());
