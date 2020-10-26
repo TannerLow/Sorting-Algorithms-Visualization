@@ -3,6 +3,7 @@ import algos.BubbleSort;
 import algos.InsertionSort;
 import algos.MergeSort;
 import algos.QuickSort;
+import algos.RadixSort;
 import algos.SelectionSort;
 import algos.ShellSort;
 
@@ -18,6 +19,7 @@ public class Main {
 		};
 		
 		ISortingAlgorithm[] fastAlgorithms = {
+				new RadixSort(),
 				new QuickSort(),
 				new ShellSort(),
 				new MergeSort()
