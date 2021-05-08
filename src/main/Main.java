@@ -1,4 +1,5 @@
 package main;
+import algos.BogoSort;
 import algos.BubbleSort;
 import algos.InsertionSort;
 import algos.MergeSort;
@@ -24,8 +25,13 @@ public class Main {
 				new ShellSort(),
 				new MergeSort()
 		};
-		
+		BogoSort arr = new BogoSort();
 		while(true) {
+			graph.setNewSize(100);
+			graph.setAlgorithmInfo(arr.getName(), arr.getDelay());
+			graph.randomize();
+			arr.sort(graph);
+			display.pause();
 			//Slower Algorithms
 			graph.setNewSize(100);
 			for(ISortingAlgorithm algorithm : slowAlgorithms) {

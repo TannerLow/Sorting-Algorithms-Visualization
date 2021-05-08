@@ -5,7 +5,6 @@ import main.SortArray;
 
 public class SelectionSort implements ISortingAlgorithm {
 	private long delay = 2;
-	
 	public void sort(SortArray array) {
 		for(int i = 0; i < array.size(); i++) {
 			int min = array.size() - 1;
